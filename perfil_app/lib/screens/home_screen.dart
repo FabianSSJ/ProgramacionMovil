@@ -5,7 +5,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Inicio')),
+      appBar: AppBar(
+        title: Text('Inicio'),
+        backgroundColor: Colors.orange,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => ProfileScreen()),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
