@@ -1,5 +1,8 @@
+// screens/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'profile_screen.dart';
+import 'package:perfil_app/providers/theme_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,10 +20,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Inicio'),
         backgroundColor: Colors.orange,
+        actions: [
+          // Switch para cambiar entre temas
+          Switch(
+            value: themeProvider.currentTheme.brightness == Brightness.dark,
+            onChanged: (bool value) {
+              themeProvider.toggleTheme();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
