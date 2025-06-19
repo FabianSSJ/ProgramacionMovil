@@ -1,12 +1,12 @@
-// screens/home_screen.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'profile_screen.dart';
 import 'package:perfil_app/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -20,48 +20,82 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Inicio'),
-        backgroundColor: Colors.orange,
-        actions: [
-          // Switch para cambiar entre temas
-          Switch(
-            value: themeProvider.currentTheme.brightness == Brightness.dark,
-            onChanged: (bool value) {
-              themeProvider.toggleTheme();
-            },
-          ),
-        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            Image.asset('assets/Vergil.jpeg', width: 150),
-            SizedBox(height: 20),
-            Text('Bienvenido a Mi Perfil', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 20),
-            Text('Veces que presionaste: $_counter'),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _incrementCounter,
-              child: Text('Contar'),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              child: Text('Ver Perfil'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Inicio'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el Drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Perfil'),
+              onTap: () {
+                Navigator.pushNamed(context, '/profile'); // Navega al Perfil
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Ajustes'),
+              onTap: () {
+                Navigator.pushNamed(context, '/settings'); // Navega a Ajustes
               },
             ),
           ],
         ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Has presionado el botón este número de veces:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium, // Cambiamos a headlineMedium
+            ),
+            SwitchListTile(
+              title: Text('Modo Oscuro'),
+              value: Theme.of(context).brightness == Brightness.dark,
+              onChanged: (bool value) {
+                Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme();
+              },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              child: Text('Ir al Perfil'),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Incrementar',
+        child: Icon(Icons.add),
       ),
     );
   }

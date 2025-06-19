@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _isRed = true;
+  Color _backgroundColor = Colors.white;
 
-  void _toggleColor() {
+  void _changeColor() {
     setState(() {
-      _isRed = !_isRed;
+      _backgroundColor =
+          _backgroundColor == Colors.white ? Colors.blue.shade100 : Colors.white;
     });
   }
 
@@ -19,33 +22,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Perfil'),
-        backgroundColor: Colors.orange,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            Image.asset('assets/Vergil.jpeg', width: 150),
-            SizedBox(height: 20),
-            Text('Fabian Campoverde', style: TextStyle(fontSize: 24)),
-            Text('Estudiante de Tecnologías de la Información',
-                style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _toggleColor,
-              child: Text('Cambiar Color'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _isRed ? Colors.red : Colors.green,
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              child: Text('Volver al inicio'),
-              onPressed: () {
-                Navigator.pop(context);
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Inicio'),
+              onTap: () {
+                Navigator.pushNamed(context, '/'); // Navega al Inicio
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Perfil'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el Drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Ajustes'),
+              onTap: () {
+                Navigator.pushNamed(context, '/settings'); // Navega a Ajustes
               },
             ),
           ],
+        ),
+      ),
+      body: Container(
+        color: _backgroundColor,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Pantalla de Perfil'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _changeColor,
+                child: Text('Cambiar color de fondo'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Volver al inicio'),
+              ),
+            ],
+          ),
         ),
       ),
     );
