@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722018017736",
+    "project_id": "database-cdaf9",
+    "storage_bucket": "database-cdaf9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722018017736:android:95ef667d6ca016607de0fd",
+        "android_client_info": {
+          "package_name": "com.app_database"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwGCEyuBU6HB2_uZwkuWj4mNg7aw3PsCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
